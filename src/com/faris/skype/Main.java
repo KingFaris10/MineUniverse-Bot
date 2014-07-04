@@ -89,7 +89,6 @@ public class Main extends JFrame implements ChatMessageListener {
 			System.out.println("An error occurred when trying to create the data folder.");
 		}
 		try {
-<<<<<<< HEAD
 			this.botSettings = new BotSettings() {
 				{
 					this.getPermissions().addPermission("KingFaris10", Arrays.asList("skype.command.stop"));
@@ -97,11 +96,6 @@ public class Main extends JFrame implements ChatMessageListener {
 					this.loadConfiguration();
 				}
 			};
-=======
-			this.botSettings.getPermissions().addPermission("KingFaris10", Arrays.asList("skype.command.stop"));
-			this.botSettings.getPermissions().save();
-			this.botSettings.loadConfiguration();
->>>>>>> origin/master
 		} catch (Exception ex) {
 			this.botSettings = new BotSettings();
 			ex.printStackTrace();
