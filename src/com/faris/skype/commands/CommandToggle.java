@@ -1,5 +1,6 @@
 package com.faris.skype.commands;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.faris.skype.Main;
@@ -39,11 +40,21 @@ public class CommandToggle extends SkypeCommand {
 					chat.send(this.getNoAccess());
 				}
 			} else {
-				chat.send(getUsage(sender.getDisplayName(), toggleType == 1 ? "start" : "stop"));
+				chat.send(this.getUsage(sender, toggleType - 1));
 			}
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public String getHelp() {
+		return "Enable or disable the bot!";
+	}
+
+	@Override
+	public List<String> getUsages() {
+		return Arrays.asList("start", "stop");
 	}
 
 }

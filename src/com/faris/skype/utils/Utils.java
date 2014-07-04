@@ -1,7 +1,9 @@
 package com.faris.skype.utils;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 public class Utils {
@@ -25,5 +27,61 @@ public class Utils {
 		} catch (Exception ex) {
 			return false;
 		}
+	}
+
+	public static class StringUtils {
+		public static String implode(String... strs) {
+			StringBuilder sb = new StringBuilder();
+			for (String str : strs) {
+				sb.append(str).append(" ");
+			}
+			return sb.toString().trim();
+		}
+
+		public static String implode(int start, String... strs) {
+			List<String> list = Arrays.asList(strs);
+			for (int a = 0; a < start; a++) {
+				list.remove(0);
+			}
+			return implode(list.toArray(new String[0]));
+		}
+
+		public static String replaceVars(String str, Object... args) {
+			int a = 0;
+			for (Object ob : args) {
+				str = str.replace("{" + a + "}", ob.toString());
+				a++;
+			}
+			return str;
+
+		}
+	}
+
+	public static String createGist(String contents) {
+		/**OAuthService oauthService = new OAuthService();
+
+		// Replace with actual login and password
+		oauthService.getClient().setCredentials("--", "--");
+
+		// Create authorisation with 'gist' scope only
+		Authorization auth = new Authorization();
+		auth.setScopes(Arrays.asList("gist"));
+		auth = oauthService.createAuthorization(auth);
+
+		// Create Gist service configured with OAuth2 token
+		GistService gistService = new GistService();
+		gistService.getClient().setOAuth2Token(auth.getToken());
+
+		// Create Gist
+		Gist gist = new Gist();
+		gist.setPublic(false);
+		gist.setDescription("Created by MineUniverse Bot via Java API");
+		GistFile file = new GistFile();
+		file.setContent("Gist!");
+		file.setFilename("gist.txt");
+		gist.setFiles(Collections.singletonMap(file.getFilename(), file));
+		gist = gistService.createGist(gist);
+		return gist.getHtmlUrl();**/
+		return "";
 	}
 }

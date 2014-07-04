@@ -1,5 +1,6 @@
 package com.faris.skype.commands;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.faris.skype.SkypeCommand;
@@ -15,11 +16,21 @@ public class CommandSay extends SkypeCommand {
 			if (!args.isEmpty()) {
 				chat.send(this.getArgs(args));
 			} else {
-				chat.send(getUsage(sender.getDisplayName(), "say <message>"));
+				chat.send(this.getUsage(sender, 0));
 			}
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public String getHelp() {
+		return "Make the bot say a message!";
+	}
+
+	@Override
+	public List<String> getUsages() {
+		return Arrays.asList("say <message>");
 	}
 
 }

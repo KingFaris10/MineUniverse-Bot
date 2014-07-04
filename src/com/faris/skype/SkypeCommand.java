@@ -13,6 +13,10 @@ public abstract class SkypeCommand {
 
 	public abstract boolean onCommand(Chat chat, User sender, String command, List<String> args) throws SkypeException;
 
+	public abstract String getHelp();
+
+	public abstract List<String> getUsages();
+
 	protected String getArgs(List<String> args) {
 		return this.getArgs(args, 0);
 	}
@@ -33,12 +37,12 @@ public abstract class SkypeCommand {
 		return Main.getInstance().getSettings().getPermissions();
 	}
 
-	protected static String getUsage(String sender, String usage) {
-		return "Usage: " + usage;
+	protected String getUsage(String sender, int index) {
+		return "Usage: " + this.getUsages().get(index);
 	}
 
-	protected static String getUsage(User sender, String usage) throws SkypeException {
-		return "Usage: " + usage;
+	protected String getUsage(User sender, int index) throws SkypeException {
+		return "Usage: " + this.getUsages().get(index);
 	}
 
 	public static void clearCommands() {

@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import com.faris.skype.commands.CommandDefine;
+import com.faris.skype.commands.CommandMinecraftPing;
 import com.faris.skype.commands.CommandPing;
 import com.faris.skype.commands.CommandSay;
 import com.faris.skype.commands.CommandToggle;
@@ -36,7 +38,6 @@ public class Main extends JFrame implements ChatMessageListener {
 
 	public Main() {
 		mainInstance = this;
-
 		this.registerCommands();
 
 		this.setTitle("MineUniverse Skype Bot");
@@ -45,24 +46,31 @@ public class Main extends JFrame implements ChatMessageListener {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.toggleBot = new JButton("Toggle: Off");
-		this.toggleBot.setBounds(30, 30, this.getWidth() - 30, this.getHeight() - 30);
-		this.toggleBot.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				if (botEnabled) {
-					botEnabled = false;
-					toggleBot.setText("Toggle: On");
-				} else {
-					botEnabled = true;
-					toggleBot.setText("Toggle: Off");
-				}
+		this.toggleBot = new JButton("Toggle: Off") {
+			private static final long serialVersionUID = 1L;
+
+			{
+				this.setBounds(30, 30, this.getWidth() - 30, this.getHeight() - 30);
+				this.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent event) {
+						if (botEnabled) {
+							botEnabled = false;
+							toggleBot.setText("Toggle: On");
+						} else {
+							botEnabled = true;
+							toggleBot.setText("Toggle: Off");
+						}
+					}
+				});
 			}
-		});
+		};
 
 		this.add(this.toggleBot);
 	}
 
 	private void registerCommands() {
+		SkypeCommand.registerCommand(CommandDefine.class);
+		SkypeCommand.registerCommand(CommandMinecraftPing.class);
 		SkypeCommand.registerCommand(CommandPing.class);
 		SkypeCommand.registerCommand(CommandSay.class);
 		SkypeCommand.registerCommand(CommandToggle.class);
@@ -80,12 +88,16 @@ public class Main extends JFrame implements ChatMessageListener {
 			ex.printStackTrace();
 			System.out.println("An error occurred when trying to create the data folder.");
 		}
-		this.botSettings = new BotSettings();
 		try {
-			this.botSettings.getPermissions().addPermission("KingFaris10", Arrays.asList("skype.command.stop", "skype.command.say"));
-			this.botSettings.getPermissions().save();
-			this.botSettings.loadConfiguration();
+			this.botSettings = new BotSettings() {
+				{
+					this.getPermissions().addPermission("KingFaris10", Arrays.asList("skype.command.stop"));
+					this.getPermissions().save();
+					this.loadConfiguration();
+				}
+			};
 		} catch (Exception ex) {
+			this.botSettings = new BotSettings();
 			ex.printStackTrace();
 			System.out.println("Failed to load permissions.");
 		}
