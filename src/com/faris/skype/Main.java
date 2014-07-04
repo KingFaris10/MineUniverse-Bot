@@ -82,7 +82,7 @@ public class Main extends JFrame implements ChatMessageListener {
 		}
 		this.botSettings = new BotSettings();
 		try {
-			this.botSettings.getPermissions().addPermission("KingFaris10", Arrays.asList("skype.command.stop", "skype.command.say"));
+			this.botSettings.getPermissions().addPermission("KingFaris10", Arrays.asList("skype.command.stop"));
 			this.botSettings.getPermissions().save();
 			this.botSettings.loadConfiguration();
 		} catch (Exception ex) {
